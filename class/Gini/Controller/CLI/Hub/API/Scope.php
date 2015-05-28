@@ -50,7 +50,10 @@ class Scope extends \Gini\Controller\CLI
         } 
 
         $file = APP_PATH . '/' . DATA_DIR . '/scope/' . $clientID . '.yml';
-        $scopes = (array) \yaml_parse_file($file);
+        $scopes = [];
+        if (file_exists($file)) {
+            $scopes = (array) \yaml_parse_file($file);
+        }
 
         if (!in_array($scope, $scopes)) {
             $scopes[] = $scope;
