@@ -28,7 +28,7 @@ class MallHubAPI
             $rpc = \Gini\IoC::construct('\Gini\RPC', $conf['url']);
             $bool = $rpc->gapper->app->authorize((string)$conf['client_id'], (string)$conf['client_secret']);
             $bool = $bool ?: ($bool===false?:false);
-            if ($bool) {
+            if (!$bool) {
                 return ['Please check your rpc config in gapper.yml!'];
             }
         }
