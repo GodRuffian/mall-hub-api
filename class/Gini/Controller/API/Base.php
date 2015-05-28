@@ -67,11 +67,14 @@ abstract class Base extends \Gini\Controller\API
         $clientID = $this->getCurrentApp();
         $file = APP_PATH . '/' . DATA_DIR . '/scope/' . $clientID . '.yml';
         if (!file_exists($file)) {
-            throw new \Gini\API\Exception('Access Denied', 401);
+            throw new \Gini\API\Exception('File Not Found', 401);
         }
 
-        $scope = (array) \yaml_parse_file($file);
-        if (!in_array($name, $scope)) {
+        $scopes = (array) \yaml_parse_file($file);
+        array_walk($scopes, function(&$value) {
+            $value = constant('\Gini\Mall\Hub\Vendor::' . $value);
+        });
+        if (!in_array($name, $scopes)) {
             throw new \Gini\API\Exception('Access Denied', 401);
         }
     }
