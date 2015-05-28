@@ -4,6 +4,7 @@
     "description": "为mall-hub-**提供统一的验证机制",
     "version": "0.1.1-e",
     "dependencies": {
-        "gini": ">=0.6.11"
+        "gini": ">=0.6.11",
+        "cache": "*"
     }
 }
