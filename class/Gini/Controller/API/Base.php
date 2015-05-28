@@ -39,8 +39,7 @@ abstract class Base extends \Gini\Controller\API
     public function getCurrentApp()
     {
         $clientID = $_SESSION[self::$_sessionKey];
-        $app = a('app', ['client_id'=>$clientID]);
-        return $app;
+        return $clientID;
     }
 
     /**
@@ -50,8 +49,8 @@ abstract class Base extends \Gini\Controller\API
      */
     public function assertAuthorized()
     {
-        $app = $this->getCurrentApp();
-        if (!$app->id) {
+        $clientID = $this->getCurrentApp();
+        if (!$clientID) {
             throw new \Gini\API\Exception('APP没有通过验证', 404);
         }
     }
@@ -65,8 +64,13 @@ abstract class Base extends \Gini\Controller\API
      */
     public function assertInScope($name)
     {
-        $app = $this->getCurrentApp();
-        $scope = (array) $app->scope;
+        $clientID = $this->getCurrentApp();
+        $file = APP_PATH . '/' . DATA_DIR . '/scope/' . $clientID . '.yml';
+        if (!file_exists($file)) {
+            throw new \Gini\API\Exception('Access Denied', 401);
+        }
+
+        $scope = (array) \yaml_parse_file($file);
         if (!in_array($name, $scope)) {
             throw new \Gini\API\Exception('Access Denied', 401);
         }

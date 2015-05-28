@@ -49,14 +49,18 @@ class Scope extends \Gini\Controller\CLI
             $scope = $data['scope'];
         } 
 
-        $app = a('app', ['cient_id'=>$clientID]);
-        $app->scope = $app->scope ?: [];
-        $app->client_id = $clientID;
-        if (!in_array($scope, $app->scope)) {
-            $app->scope[] = $scope;
+        $file = APP_PATH . '/' . DATA_DIR . '/scope/' . $clientID . '.yml';
+        $scopes = (array) \yaml_parse_file($file);
+
+        if (!in_array($scope, $scopes)) {
+            $scopes[] = $scope;
+            $bool = \yaml_emit_file($file, $scopes);
+        }
+        else {
+            $bool = true;
         }
 
-        if ($app->save()) {
+        if ($bool===true) {
             $this->show('添加scope成功');
             return;
         }

@@ -16,8 +16,14 @@ class Mall extends \Gini\Controller\API\Base
     public function actionAuthorize($clientID, $clientSecret)
     {
         $conf = \Gini\Config::get('gapper.rpc');
-        $rpc = \Gini\IoC::construct('\Gini\RPC', $conf['url']);
-        $bool = $rpc->gapper->app->authorize($clientID, $clientSecret);
+        try {
+            $rpc = \Gini\IoC::construct('\Gini\RPC', $conf['url']);
+            $bool = $rpc->gapper->app->authorize($clientID, $clientSecret);
+        }
+        catch (\Exception $e) {
+            throw new \Gini\API\Exception('网络故障', 503);
+        }
+
         if ($bool) {
             $this->setCurrentApp($clientID);
             return session_id();
