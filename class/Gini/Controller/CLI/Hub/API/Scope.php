@@ -36,8 +36,8 @@ class Scope extends \Gini\Controller\CLI
 
         $scopes = $this->getScopes();
         $this->show('以下scope可选');
-        foreach ($scopes as $scope) {
-            $this->show("\t$scope");
+        foreach ($scopes as $sc) {
+            $this->show("\t$sc");
         }
 
         while (!$scope) {
