@@ -20,6 +20,19 @@ abstract class Base extends \Gini\Controller\API
     }
 
     /**
+        * @brief 非正常退出
+        *
+        * @param $message
+        * @param $code
+        *
+        * @return 
+     */
+    public function quit($message, $code=1)
+    {
+        throw new \Gini\API\Exception($message, $code);
+    }
+
+    /**
         * @brief 设置当前请求的APP信息
         *
         * @param $id

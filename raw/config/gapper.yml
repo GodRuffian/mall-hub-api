@@ -1,0 +1,4 @@
+---
+rpc:
+  url: http://gapper.in/api
+...
