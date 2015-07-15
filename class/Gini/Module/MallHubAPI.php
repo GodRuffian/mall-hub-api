@@ -14,10 +14,16 @@ class MallHubAPI
 
     public static function diagnose()
     {
-        // check database: SHOW TABLES?
-        $db = \Gini\Database::db();
-        $ret = $db->query('SHOW TABLES');
-        if (!$ret) {
+        try {
+            // check database: SHOW TABLES?
+            $db = \Gini\Database::db();
+            $ret = $db->query('SHOW TABLES');
+            if (!$ret) {
+                return ['Please config your database in raw/config/@'
+                    .($_SERVER['GINI_ENV'] ?: 'production').'/database.yml!', ];
+            }
+        }
+        catch (\Exception $e) {
             return ['Please config your database in raw/config/@'
                 .($_SERVER['GINI_ENV'] ?: 'production').'/database.yml!', ];
         }
