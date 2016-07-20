@@ -1,0 +1,5 @@
+---
+rpc:
+  node:
+    url: ${MALL_HUB_NODE_API}
+...

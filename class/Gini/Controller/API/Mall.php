@@ -7,7 +7,7 @@ class Mall extends \Gini\Controller\API\Base
     /**
         * @brief 重写构造函数，避免authorize断言判断
         *
-        * @return 
+        * @return
      */
     public function __construct()
     {
@@ -15,10 +15,11 @@ class Mall extends \Gini\Controller\API\Base
 
     public function actionAuthorize($clientID, $clientSecret)
     {
-        $conf = \Gini\Config::get('gapper.rpc');
+        $confs = \Gini\Config::get('mall.rpc');
+        $conf  = $confs['node'];
         try {
             $rpc = \Gini\IoC::construct('\Gini\RPC', $conf['url']);
-            $bool = $rpc->gapper->app->authorize($clientID, $clientSecret);
+            $bool = $rpc->mall->authorize($clientID, $clientSecret);
         }
         catch (\Exception $e) {
             throw new \Gini\API\Exception('网络故障', 503);
@@ -30,5 +31,5 @@ class Mall extends \Gini\Controller\API\Base
         }
         throw new \Gini\API\Exception('非法的APP', 404);
     }
-    
+
 }
