@@ -1,5 +1,5 @@
 ---
 rpc:
   node:
-    url: ${MALL_HUB_NODE_API}
+    url: http://node.hub.labmai.com/api
 ...
