@@ -1,0 +1,10 @@
+---
+default:
+  driver: redis
+  options:
+    key_prefix: hub-
+    servers:
+      default:
+        host: rd.labmai.com
+        port: 6379
+...
