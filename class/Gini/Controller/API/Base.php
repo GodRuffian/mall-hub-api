@@ -91,4 +91,13 @@ abstract class Base extends \Gini\Controller\API
             throw new \Gini\API\Exception('Access Denied', 401);
         }
     }
+
+    public static function cache($key, $value=null) 
+    {
+        $cacher = \Gini\Cache::of('defalut');
+        if (is_null($value)) {
+            return $cacher->get($key);
+        }
+        $cacher->set($key, $value, 300);
+    }
 }
